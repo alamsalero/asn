@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alam Salero Nusantara</title>
+    
+    <!-- Memuat Tailwind CSS melalui CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Memuat Ikon FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Memuat Google Fonts (Playfair Display untuk elegan, Poppins untuk teks biasa) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Konfigurasi warna merah maroon dan font khusus -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'emas': '#d4af37',
+                        'emas-terang': '#fce38a',
+                        'maroon-tua': '#2b0404',   /* Background paling gelap */
+                        'maroon-inti': '#5e0b0b',  /* Merah maroon utama */
+                        'maroon-muda': '#8a1c1c'   /* Aksen terang maroon */
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Gaya CSS tambahan -->
+    <style>
+        .teks-gradasi-emas {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .bg-gradasi-maroon {
+            background: linear-gradient(135deg, #5e0b0b 0%, #2b0404 100%);
+        }
+        .bayangan-emas {
+            box-shadow: 0 4px 30px rgba(212, 175, 55, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-maroon-tua text-gray-200 font-sans antialiased selection:bg-emas selection:text-maroon-tua">
+
+    <!-- Navigasi Utama -->
+    <nav class="fixed w-full z-50 bg-maroon-tua/95 backdrop-blur-md border-b border-maroon-inti transition-all duration-300 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="#" class="font-serif text-2xl font-bold text-white tracking-widest uppercase">
+                ALAM <span class="text-emas">SALERO</span>
+            </a>
+            
+            <!-- Menu untuk Laptop/Desktop -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#beranda" class="text-gray-200 hover:text-emas text-sm font-medium tracking-wide transition duration-300">Beranda</a>
+                <a href="#makanan" class="text-gray-200 hover:text-emas text-sm font-medium tracking-wide transition duration-300">Makanan</a>
+                <a href="#minuman" class="text-gray-200 hover:text-emas text-sm font-medium tracking-wide transition duration-300">Minuman</a>
+                <a href="#lokasi" class="text-gray-200 hover:text-emas text-sm font-medium tracking-wide transition duration-300">Lokasi</a>
+                
+                <!-- Tautan Instagram -->
+                <a href="https://www.instagram.com/alamsaleronusantara" target="_blank" class="text-emas hover:text-emas-terang transition duration-300 flex items-center gap-2 border border-emas px-4 py-2 rounded-full text-sm">
+                    <i class="fab fa-instagram text-lg"></i> Ikuti Kami
+                </a>
+            </div>
+
+            <!-- Tombol Toggle Menu Mobile (HP) -->
+            <button id="tombol-menu-hp" class="md:hidden text-emas hover:text-white focus:outline-none transition duration-300">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Dropdown Menu Mobile -->
+        <div id="menu-hp" class="hidden md:hidden bg-maroon-inti border-b border-maroon-muda shadow-xl">
+            <div class="flex flex-col px-6 py-5 space-y-5">
+                <a href="#beranda" class="text-gray-100 hover:text-emas font-medium">Beranda</a>
+                <a href="#makanan" class="text-gray-100 hover:text-emas font-medium">Menu Makanan</a>
+                <a href="#minuman" class="text-gray-100 hover:text-emas font-medium">Menu Minuman</a>
+                <a href="#lokasi" class="text-gray-100 hover:text-emas font-medium">Lokasi Cabang</a>
+                <a href="https://www.instagram.com/alamsaleronusantara" target="_blank" class="text-emas font-medium inline-flex items-center">
+                    <i class="fab fa-instagram mr-3 text-xl"></i> Instagram Kami
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bagian Pembuka (Hero Section) -->
+    <section id="beranda" class="min-h-screen flex items-center pt-24 relative overflow-hidden bg-gradasi-maroon">
+        <!-- Latar Belakang Aksen -->
+        <div class="absolute top-1/4 right-0 w-96 h-96 bg-emas/10 rounded-full blur-3xl z-0"></div>
+        <div class="absolute bottom-0 left-10 w-72 h-72 bg-maroon-muda/30 rounded-full blur-3xl z-0"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Teks Sambutan -->
+            <div class="order-2 lg:order-1 text-center lg:text-left">
+                <p class="text-emas font-medium tracking-widest uppercase mb-4 text-sm">Kekayaan Cita Rasa Asli</p>
+                <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight">
+                    Selamat Datang di <br>
+                    <span class="teks-gradasi-emas">Alam Salero</span> <br>
+                    Nusantara
+                </h1>
+                <p class="text-base md:text-lg mb-10 text-gray-300 max-w-xl mx-auto lg:mx-0">Nikmati pengalaman kuliner masakan Padang dan Nusantara yang autentik, disajikan dengan elegan dan profesional untuk memuaskan selera Anda.</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                    <a href="#lokasi" class="bg-emas text-maroon-tua px-8 py-4 rounded-sm font-semibold hover:bg-emas-terang transition duration-300 shadow-lg shadow-emas/20">Temukan Lokasi Kami</a>
+                    <a href="#makanan" class="border border-emas text-emas px-8 py-4 rounded-sm font-semibold hover:bg-emas hover:text-maroon-tua transition duration-300">Lihat Menu</a>
+                </div>
+            </div>
+            
+            <!-- Gambar Sambutan -->
+            <div class="order-1 lg:order-2 relative group">
+                <div class="absolute inset-0 bg-emas/20 rounded-t-full transform translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition duration-500"></div>
+                <div class="relative w-full h-[400px] md:h-[500px] bg-maroon-inti flex items-center justify-center text-center p-4 rounded-t-full overflow-hidden border border-emas/30 shadow-2xl">
+                    <span class="text-emas/80 italic flex flex-col items-center gap-3">
+                        <i class="fas fa-utensils text-4xl mb-2"></i>
+                        [Gambar Sajian Elegan Nusantara]
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Menu Makanan -->
+    <section id="makanan" class="py-24 bg-maroon-tua">
+        <div class="container mx-auto px-6">
+            
+            <!-- Judul Menu -->
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mb-4">Menu <span class="teks-gradasi-emas">Best Seller</span> Kami</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Sajian unggulan yang dibuat dari bahan-bahan segar dan resep leluhur yang dijaga keasliannya.</p>
+            </div>
+            
+            <!-- Daftar Menu Makanan -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Menu 1 (Rendang) -->
+                <div class="bg-maroon-inti rounded-xl overflow-hidden border border-maroon-muda hover:border-emas transition duration-300 group shadow-lg">
+                    <div class="h-64 bg-maroon-tua flex items-center justify-center text-center p-4 group-hover:scale-105 transition duration-500 relative">
+                        <div class="absolute top-4 right-4 bg-emas text-maroon-tua text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">Best Seller</div>
+                        <span class="text-gray-400 italic">[Gambar Rendang Daging Sapi]</span>
+                    </div>
+                    <div class="p-8 relative z-10 bg-maroon-inti">
+                        <h3 class="font-serif text-xl font-bold text-white mb-3 group-hover:text-emas transition duration-300">Rendang Daging Sapi</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Dimasak perlahan mengikuti tradisi menggunakan rempah-rempah pilihan untuk menciptakan rasa yang meresap dan daging yang empuk.</p>
+                    </div>
+                </div>
+
+                <!-- Menu 2 (Kikil) -->
+                <div class="bg-maroon-inti rounded-xl overflow-hidden border border-maroon-muda hover:border-emas transition duration-300 group shadow-lg">
+                    <div class="h-64 bg-maroon-tua flex items-center justify-center text-center p-4 group-hover:scale-105 transition duration-500 relative">
+                        <div class="absolute top-4 right-4 bg-emas text-maroon-tua text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">Best Seller</div>
+                        <span class="text-gray-400 italic">[Gambar Gulai Kikil Tunjang]</span>
+                    </div>
+                    <div class="p-8 relative z-10 bg-maroon-inti">
+                        <h3 class="font-serif text-xl font-bold text-white mb-3 group-hover:text-emas transition duration-300">Gulai Kikil Tunjang</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Potongan kikil sapi pilihan yang disajikan dengan kuah gulai santan kental yang gurih, kaya rempah, dan menggugah selera.</p>
+                    </div>
+                </div>
+
+                <!-- Menu 3 (Dendeng) -->
+                <div class="bg-maroon-inti rounded-xl overflow-hidden border border-maroon-muda hover:border-emas transition duration-300 group shadow-lg">
+                    <div class="h-64 bg-maroon-tua flex items-center justify-center text-center p-4 group-hover:scale-105 transition duration-500 relative">
+                        <div class="absolute top-4 right-4 bg-emas text-maroon-tua text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">Best Seller</div>
+                        <span class="text-gray-400 italic">[Gambar Dendeng Balado]</span>
+                    </div>
+                    <div class="p-8 relative z-10 bg-maroon-inti">
+                        <h3 class="font-serif text-xl font-bold text-white mb-3 group-hover:text-emas transition duration-300">Dendeng Sapi</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Irisan daging sapi tipis yang digoreng renyah, kemudian disiram dengan racikan sambal balado merah yang pedas dan nikmat.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Menu Minuman Baru -->
+    <section id="minuman" class="py-24 bg-gradasi-maroon relative border-y border-maroon-inti">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mb-4">Minuman <span class="teks-gradasi-emas">Segar & Hangat</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">Lengkapi santapan Anda dengan menu minuman baru kami. Tersedia dalam pilihan dingin yang menyegarkan atau panas yang menenangkan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+                
+                <!-- Thai Tea -->
+                <div class="flex flex-col md:flex-row bg-maroon-tua rounded-2xl overflow-hidden border border-emas/20 hover:border-emas transition duration-300 shadow-xl items-center">
+                    <div class="w-full md:w-1/2 h-60 bg-maroon-inti flex items-center justify-center text-center p-4">
+                        <span class="text-emas/70 italic flex flex-col items-center gap-2">
+                            <i class="fas fa-glass-whiskey text-3xl"></i>
+                            [Gambar Thai Tea]
+                        </span>
+                    </div>
+                    <div class="w-full md:w-1/2 p-8">
+                        <div class="inline-block bg-emas text-maroon-tua text-[10px] font-bold px-2 py-1 rounded mb-3 uppercase">Menu Baru</div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Thai Tea</h3>
+                        <p class="text-gray-400 text-sm mb-4">Perpaduan teh premium khas Thailand dengan susu yang creamy dan manis. Cocok disajikan dingin maupun panas.</p>
+                        <span class="text-emas font-semibold text-sm"><i class="fas fa-snowflake mr-1"></i> Dingin | <i class="fas fa-fire mr-1"></i> Panas</span>
+                    </div>
+                </div>
+
+                <!-- Green Tea -->
+                <div class="flex flex-col md:flex-row bg-maroon-tua rounded-2xl overflow-hidden border border-emas/20 hover:border-emas transition duration-300 shadow-xl items-center">
+                    <div class="w-full md:w-1/2 h-60 bg-maroon-inti flex items-center justify-center text-center p-4">
+                        <span class="text-emas/70 italic flex flex-col items-center gap-2">
+                            <i class="fas fa-leaf text-3xl"></i>
+                            [Gambar Green Tea]
+                        </span>
+                    </div>
+                    <div class="w-full md:w-1/2 p-8">
+                        <div class="inline-block bg-emas text-maroon-tua text-[10px] font-bold px-2 py-1 rounded mb-3 uppercase">Menu Baru</div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Green Tea</h3>
+                        <p class="text-gray-400 text-sm mb-4">Matcha green tea berkualitas tinggi dengan aroma yang menenangkan jiwa. Nikmat disajikan dingin maupun panas.</p>
+                        <span class="text-emas font-semibold text-sm"><i class="fas fa-snowflake mr-1"></i> Dingin | <i class="fas fa-fire mr-1"></i> Panas</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Lokasi & Kontak -->
+    <section id="lokasi" class="py-24 bg-maroon-tua relative">
+        <div class="container mx-auto px-6">
+            
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mb-4">Cabang <span class="teks-gradasi-emas">Kami</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Kunjungi dan rasakan langsung keindahan rasa serta pelayanan terbaik dari restoran kami di lokasi strategis berikut.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                
+                <!-- Kartu Cabang Tamrin (Linktree) -->
+                <div class="bg-gradasi-maroon rounded-2xl p-10 border border-maroon-muda hover:border-emas bayangan-emas transition duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emas/10 rounded-bl-full z-0 transition duration-300 group-hover:bg-emas/20"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-maroon-tua rounded-full flex items-center justify-center text-emas text-2xl mb-8 border border-emas/30 shadow-md">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl font-bold text-white mb-4">Alam Salero Tamrin</h3>
+                        <p class="text-gray-300 mb-8 leading-relaxed">Untuk melihat daftar menu lengkap, mendapatkan informasi lebih lanjut, atau melakukan pemesanan untuk cabang Tamrin, silakan klik tautan di bawah ini.</p>
+                        <a href="https://linktr.ee/qr/9ed1cc72-f73e-49a5-ac66-e88818a0ff0f" target="_blank" class="inline-flex items-center text-maroon-tua bg-emas px-6 py-3 rounded-md text-sm font-bold hover:bg-emas-terang transition duration-300 shadow-lg shadow-emas/20">
+                            Buka Linktree Tamrin <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kartu Cabang Polda (WhatsApp) -->
+                <div class="bg-gradasi-maroon rounded-2xl p-10 border border-maroon-muda hover:border-emas bayangan-emas transition duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emas/10 rounded-bl-full z-0 transition duration-300 group-hover:bg-emas/20"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-maroon-tua rounded-full flex items-center justify-center text-emas text-2xl mb-8 border border-emas/30 shadow-md">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl font-bold text-white mb-4">Alam Salero Polda</h3>
+                        <p class="text-gray-300 mb-8 leading-relaxed">Ingin memesan tempat, katering, atau makanan dengan respon cepat? Langsung saja hubungi cabang Polda kami melalui WhatsApp resmi di bawah.</p>
+                        <a href="https://wa.me/628977712026" target="_blank" class="inline-flex items-center text-maroon-tua bg-emas px-6 py-3 rounded-md text-sm font-bold hover:bg-emas-terang transition duration-300 shadow-lg shadow-emas/20">
+                            WA: 089-7771-2026 <i class="fab fa-whatsapp ml-2 text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Footer -->
+    <footer class="bg-[#1a0202] py-16 border-t border-maroon-inti">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-10">
+                
+                <!-- Keterangan Perusahaan -->
+                <div class="text-center md:text-left max-w-sm">
+                    <h2 class="font-serif text-3xl font-bold text-white mb-4">ALAM <span class="text-emas">SALERO</span></h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Menjaga cita rasa leluhur Nusantara dengan standar pelayanan yang prima, higienis, dan elegan. Kepuasan pelanggan adalah prioritas utama kami.</p>
+                </div>
+                
+                <!-- Tautan Cepat -->
+                <div class="text-center md:text-left">
+                    <h4 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Tautan Cepat</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#beranda" class="text-gray-400 hover:text-emas text-sm transition">Beranda Utama</a></li>
+                        <li><a href="#makanan" class="text-gray-400 hover:text-emas text-sm transition">Menu Makanan</a></li>
+                        <li><a href="#minuman" class="text-gray-400 hover:text-emas text-sm transition">Menu Minuman</a></li>
+                        <li><a href="#lokasi" class="text-gray-400 hover:text-emas text-sm transition">Lokasi Caban</a></li>
+                    </ul>
+                </div>
+
+                <!-- Sosial Media & Kontak -->
+                <div class="text-center md:text-left">
+                    <h4 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Hubungi Kami</h4>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://www.instagram.com/alamsaleronusantara" target="_blank" class="w-10 h-10 bg-maroon-inti rounded-full flex items-center justify-center text-emas hover:text-maroon-tua hover:bg-emas transition duration-300" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/628977712026" target="_blank" class="w-10 h-10 bg-maroon-inti rounded-full flex items-center justify-center text-emas hover:text-maroon-tua hover:bg-emas transition duration-300" title="WhatsApp Polda">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://linktr.ee/qr/9ed1cc72-f73e-49a5-ac66-e88818a0ff0f" target="_blank" class="w-10 h-10 bg-maroon-inti rounded-full flex items-center justify-center text-emas hover:text-maroon-tua hover:bg-emas transition duration-300" title="Linktree Tamrin">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Garis Hak Cipta -->
+            <div class="border-t border-maroon-inti mt-12 pt-8 text-center flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">&copy; 2026 Alam Salero Nusantara. Hak Cipta Dilindungi.</p>
+                <p class="text-gray-500 text-sm mt-2 md:mt-0">Didesain eksklusif secara profesional</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Skrip mengatur navigasi di HP (Mobile) -->
+    <script>
+        const tombolMenu = document.getElementById('tombol-menu-hp');
+        const menuHp = document.getElementById('menu-hp');
+        
+        // Buka/Tutup menu
+        tombolMenu.addEventListener('click', () => {
+            menuHp.classList.toggle('hidden');
+        });
+
+        // Tutup menu otomatis saat tautan diklik (mobile)
+        const tautanMobile = menuHp.querySelectorAll('a');
+        tautanMobile.forEach(tautan => {
+            tautan.addEventListener('click', () => {
+                menuHp.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
