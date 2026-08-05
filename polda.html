@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alam Salero Nusantara - Cabang Polda Metro Jaya</title>
+    
+    <!-- Tailwind CSS untuk styling responsif & modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tema Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#eefcf5',
+                            DEFAULT: '#059669', // Emerald 600
+                            dark: '#064e3b',   // Emerald 900
+                        },
+                        accent: '#d97706', // Amber 600 (Emas kecokelatan)
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        serif: ['Playfair Display', 'ui-serif', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Animasi masuk perlahan */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 antialiased selection:bg-brand selection:text-white relative">
+
+    <!-- Hero Section (Background Merah Maroon) -->
+    <!-- Menggunakan gradasi dari #800000 (Maroon) ke #4a0404 (Maroon gelap) agar terlihat mewah -->
+    <header class="relative h-[55vh] md:h-[65vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#800000] to-[#4a0404]">
+        
+        <!-- LOGO POJOK KANAN ATAS -->
+    <!--    <div class="absolute top-4 right-4 md:top-8 md:right-8 z-30 fade-in-up">
+            <!-- GANTI LINK LOGO DI BAWAH INI -->
+        <!--           <img src="" 
+                 alt="Logo Alam Salero Nusantara" 
+                 class="h-12 w-auto md:h-16 object-contain drop-shadow-lg hover:scale-105 transition-transform duration-300">
+        </div> 
+        
+        <!-- Teks Hero -->
+        <div class="relative z-10 text-center px-4 fade-in-up">
+            <p class="text-white/80 text-sm md:text-base tracking-widest uppercase mb-3 font-medium">Selamat Datang di</p>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-4 leading-tight">
+                Alam Salero<br>Nusantara
+            </h1>
+            <div class="w-24 h-1 bg-accent mx-auto rounded-full mb-4"></div>
+            <p class="text-gray-200 text-lg md:text-xl font-light">Cabang Polda Metro Jaya</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 relative z-20 -mt-16 md:-mt-24">
+        
+        <!-- Kartu Informasi Lokasi -->
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border-t-4 border-brand fade-in-up" style="animation-delay: 0.2s;">
+            <div class="flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
+                <!-- Detail Alamat -->
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent w-6 h-6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <h2 class="text-xl font-semibold text-brand-dark font-serif">Lokasi Kami</h2>
+                    </div>
+                    <div class="text-gray-600 space-y-2 leading-relaxed">
+                        <p class="font-medium text-gray-800 text-lg">Polda Metro Jaya</p>
+                        <p>Jl. Jenderal Sudirman No.55, RT.5/RW.3, Senayan,<br>
+                        Kec. Kby. Baru, Kota Jakarta Selatan,<br>
+                        Daerah Khusus Ibukota Jakarta 12190</p>
+                    </div>
+                </div>
+
+                <!-- Jam Buka -->
+                <div class="bg-brand-light p-5 rounded-2xl w-full md:w-auto md:min-w-[250px]">
+                    <div class="flex items-center gap-2 mb-3 text-brand-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span class="font-medium">Jam Operasional</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Buka Setiap Hari<br>Menyesuaikan jam operasional.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOTO TAMPILAN DEPAN TOKO -->
+        <div class="mt-8 md:mt-12 fade-in-up" style="animation-delay: 0.3s;">
+            <div class="flex items-center gap-3 mb-4 px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent w-5 h-5"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                <h2 class="text-xl font-semibold text-brand-dark font-serif">Tampilan Cabang Kami</h2>
+            </div>
+            
+            <div class="w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 bg-white group relative">
+                <!-- GANTI LINK GAMBAR DEPAN TOKO DI BAWAH INI -->
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                     alt="Tampilan Depan Resto" 
+                     class="w-full h-64 md:h-96 object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-in-out">
+            </div>
+        </div>
+
+        <!-- Profil Owner -->
+        <div class="mt-8 md:mt-12 bg-white rounded-3xl shadow-sm border border-gray-100 p-6 md:p-10 fade-in-up" style="animation-delay: 0.4s;">
+            <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                <div class="shrink-0 relative">
+                    <div class="absolute inset-0 border-2 border-accent rounded-full transform rotate-6 scale-105"></div>
+                    <!-- GANTI LINK FOTO OWNER DI BAWAH INI -->
+                    <img src="lida.jpg" 
+                         alt="Maulida Paqot - Owner" 
+                         class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white shadow-md relative z-10">
+                </div>
+                
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-serif font-bold text-brand-dark mb-1">Maulida Syarifah Terkocak sedunia</h3>
+                    <p class="text-accent font-medium mb-4 flex items-center justify-center md:justify-start gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        Owner
+                    </p>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed italic">
+                        "Terima kasih telah mengunjungi halaman resmi Alam Salero Nusantara cabang Polda Metro Jaya. Kami berkomitmen untuk selalu menyajikan cita rasa autentik dan pelayanan terbaik untuk Anda. Selamat menikmati hidangan kami!"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKSI PROMOSI PESANAN BOX & CATERING -->
+        <div class="mt-8 md:mt-12 bg-brand-light rounded-3xl shadow-sm border border-brand/20 p-6 md:p-8 fade-in-up relative overflow-hidden" style="animation-delay: 0.5s;">
+            <!-- Dekorasi Icon besar transparan di latar belakang -->
+            <div class="absolute -right-6 -top-6 text-brand opacity-10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row items-center gap-6">
+                <!-- Icon Kotak Pesanan -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm text-accent shrink-0 transform -rotate-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"></path><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"></path><path d="M4 6h16v6H4z"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                </div>
+                
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl md:text-2xl font-serif font-bold text-brand-dark mb-2">Terima Pesanan Nasi Box & Catering</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4 text-sm md:text-base">
+                        Sajikan cita rasa istimewa Alam Salero Nusantara untuk berbagai momen spesial Anda! Kami siap melayani pesanan Nasi Box & Catering untuk acara kantor, arisan, syukuran, hingga pernikahan. 
+                    </p>
+                    <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm text-sm border border-brand/10 font-semibold text-brand-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                        Konfirmasi & Pesan via WhatsApp di bawah
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tombol Aksi (Kontak & Sosial Media) -->
+        <div class="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 fade-in-up" style="animation-delay: 0.6s;">
+            <!-- Tombol WhatsApp -->
+            <a href="https://wa.me/628977712026" target="_blank" rel="noopener noreferrer" 
+               class="group flex items-center justify-center gap-4 bg-[#25D366] hover:bg-[#1ebd5a] text-white px-6 py-4 rounded-2xl font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <div class="text-left">
+                    <div class="text-xs text-white/90">Pesan & Konfirmasi via</div>
+                    <div class="text-lg font-bold">WhatsApp</div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+
+            <!-- Tombol Instagram -->
+            <a href="https://www.instagram.com/alam_salero_nusantara" target="_blank" rel="noopener noreferrer" 
+               class="group flex items-center justify-center gap-4 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 text-white px-6 py-4 rounded-2xl font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <div class="text-left">
+                    <div class="text-xs text-white/90">Ikuti kami di</div>
+                    <div class="text-lg font-bold">Instagram</div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto py-8">
+        <div class="max-w-4xl mx-auto px-4 text-center text-gray-500 text-sm">
+            <p>&copy; 2026 Alam Salero Nusantara. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
