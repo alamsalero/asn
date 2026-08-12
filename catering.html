@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alam Salero Nusantara - Catering Nasi Padang & Acara Eksklusif</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-page: #fbf9f6;
+            --primary-maroon: #5a1827;
+            --primary-dark: #3f101b;
+            --accent-gold: #d4af37;
+            --text-main: #2d2d2d;
+            --text-muted: #666666;
+            --white: #ffffff;
+            
+            --card-pink-bg: #fff5f7;
+            --card-pink-border: #fcd8df;
+            --card-blue-bg: #f3f8fc;
+            --card-blue-border: #d2e4f5;
+            --card-green-bg: #f4faf6;
+            --card-green-border: #d0ebd8;
+            --neutral-border: #f0e6dc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header / Navbar Auto-fit */
+        header {
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            font-weight: 700;
+            color: var(--primary-maroon);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-maroon);
+        }
+
+        /* Hero Section Auto-fit */
+        .hero {
+            text-align: center;
+            padding: 40px 5% 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.35rem, 4vw, 1.75rem);
+            color: var(--primary-maroon);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: clamp(0.82rem, 1.5vw, 0.9rem);
+        }
+
+        /* Features / Why Choose Us (Auto-fit Grid) */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            max-width: 1000px;
+            margin: 10px auto 30px;
+            padding: 0 4%;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid var(--neutral-border);
+            padding: 18px 12px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(90, 24, 39, 0.02);
+        }
+
+        .feature-card i {
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            margin-bottom: 6px;
+        }
+
+        .feature-card h3 {
+            font-size: 0.88rem;
+            color: var(--primary-maroon);
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        /* Section Styling */
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
+            color: var(--primary-maroon);
+            margin: 35px 0 15px;
+            font-weight: 600;
+            padding: 0 4%;
+        }
+
+        /* Packages Container (Auto-fit) */
+        .packages-container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 4%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .package-card {
+            border-radius: 12px;
+            padding: clamp(15px, 3vw, 25px);
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+            width: 100%;
+        }
+
+        .package-card.pink {
+            background: var(--card-pink-bg);
+            border: 1px solid var(--card-pink-border);
+        }
+
+        .package-card.blue {
+            background: var(--card-blue-bg);
+            border: 1px solid var(--card-blue-border);
+        }
+
+        .package-card.green {
+            background: var(--card-green-bg);
+            border: 1px solid var(--card-green-border);
+        }
+
+        .package-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .package-header i {
+            font-size: 1.35rem;
+            color: var(--primary-maroon);
+            margin-bottom: 4px;
+        }
+
+        .package-header h3 {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            color: var(--primary-maroon);
+            font-weight: 600;
+        }
+
+        .package-header .sub-info {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .package-header .price {
+            font-size: clamp(0.92rem, 2vw, 1rem);
+            font-weight: 700;
+            color: var(--primary-maroon);
+            margin-top: 3px;
+        }
+
+        .package-body {
+            margin-bottom: 15px;
+            border-top: 1px dashed rgba(0,0,0,0.1);
+            padding-top: 10px;
+        }
+
+        .package-body h4 {
+            font-size: 0.83rem;
+            margin-bottom: 5px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .package-body ul {
+            list-style-position: inside;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 4px;
+        }
+
+        .btn-order {
+            display: block;
+            width: 100%;
+            background: var(--primary-maroon);
+            color: var(--white);
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: background 0.3s;
+        }
+
+        .btn-order:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Menu Options Grid (Auto-fit with price styling) */
+        .menu-grid {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 4%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .menu-category {
+            background: var(--white);
+            border: 1px solid var(--neutral-border);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        }
+
+        .menu-category h3 {
+            font-size: 0.9rem;
+            color: var(--primary-maroon);
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--bg-page);
+            padding-bottom: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .menu-category ul {
+            list-style: none;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .menu-category li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            border-bottom: 1px dashed #f5f0eb;
+        }
+
+        .menu-category li:last-child {
+            border-bottom: none;
+        }
+
+        .menu-category li span.menu-price {
+            font-weight: 600;
+            color: var(--primary-maroon);
+            font-size: 0.75rem;
+        }
+
+        /* Order Guide Section (Auto-fit) */
+        .order-guide {
+            max-width: 850px;
+            margin: 35px auto 0;
+            padding: 25px 4%;
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--neutral-border);
+            box-sizing: border-box;
+        }
+
+        .guide-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .step-item {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-maroon);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .step-item h4 {
+            font-size: 0.82rem;
+            color: var(--primary-maroon);
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .step-item p {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .contact-box {
+            background: var(--bg-page);
+            padding: 18px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            text-align: center;
+            border: 1px solid var(--neutral-border);
+        }
+
+        .contact-box p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .contact-box p strong {
+            color: var(--text-main);
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 9px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1ebe5d;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 22px 4%;
+            background: var(--primary-dark);
+            color: var(--white);
+            margin-top: 35px;
+            font-size: 0.78rem;
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                padding: 30px 4% 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Alam Salero Nusantara</div>
+        <ul class="nav-links">
+            <li><a href="#paket">Paket Catering</a></li>
+            <li><a href="#menu">Pilihan Menu</a></li>
+            <li><a href="#cara-pesan">Cara Pesan</a></li>
+        </ul>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Catering Nasi Padang & Acara Eksklusif</h1>
+        <p>Sajikan pengalaman kuliner nasi padang autentik dan masakan Minang istimewa untuk setiap momen berharga Anda.</p>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-star"></i>
+            <h3>Kualitas Terjamin</h3>
+            <p>Rasa autentik dengan bahan segar pilihan.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-clock"></i>
+            <h3>Tepat Waktu</h3>
+            <p>Pengiriman sesuai jadwal acara Anda.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-utensils"></i>
+            <h3>Chef Berpengalaman</h3>
+            <p>Tim juru masak khusus masakan Minang.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Higienis & Aman</h3>
+            <p>Standar kebersihan tinggi dan terpercaya.</p>
+        </div>
+    </section>
+
+    <!-- Paket Catering -->
+    <h2 class="section-title" id="paket">Paket Catering</h2>
+    <div class="packages-container">
+        
+        <!-- Paket Pernikahan -->
+        <div class="package-card pink">
+            <div class="package-header">
+                <i class="fas fa-ring"></i>
+                <h3>Paket Pernikahan</h3>
+                <div class="sub-info">Min. Order: 200 porsi</div>
+                <div class="price">Mulai Rp 35.000/porsi</div>
+            </div>
+            <div class="package-body">
+                <h4>Termasuk:</h4>
+                <ul>
+                    <li>Menu lengkap 5 item</li>
+                    <li>Nasi putih</li>
+                    <li>Kerupuk & sambal</li>
+                    <li>Kemasan elegan</li>
+                    <li>Setup buffet</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Pernikahan." class="btn-order" target="_blank">
+                Pesan Paket
+            </a>
+        </div>
+
+        <!-- Paket Corporate -->
+        <div class="package-card blue">
+            <div class="package-header">
+                <i class="fas fa-building"></i>
+                <h3>Paket Corporate</h3>
+                <div class="sub-info">Min. Order: 50 porsi</div>
+                <div class="price">Mulai Rp 25.000/porsi</div>
+            </div>
+            <div class="package-body">
+                <h4>Termasuk:</h4>
+                <ul>
+                    <li>Menu pilihan 3 item</li>
+                    <li>Nasi putih</li>
+                    <li>Air mineral</li>
+                    <li>Lunch box</li>
+                    <li>On-time delivery</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Corporate." class="btn-order" target="_blank">
+                Pesan Paket
+            </a>
+        </div>
+
+        <!-- Paket Arisan/Gathering -->
+        <div class="package-card green">
+            <div class="package-header">
+                <i class="fas fa-users"></i>
+                <h3>Paket Arisan / Gathering</h3>
+                <div class="sub-info">Min. Order: 30 porsi</div>
+                <div class="price">Mulai Rp 30.000/porsi</div>
+            </div>
+            <div class="package-body">
+                <h4>Termasuk:</h4>
+                <ul>
+                    <li>Menu tradisional</li>
+                    <li>Nasi putih</li>
+                    <li>Dessert</li>
+                    <li>Peralatan makan</li>
+                    <li>Dekorasi sederhana</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Arisan%20atau%20Gathering." class="btn-order" target="_blank">
+                Pesan Paket
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Pilihan Menu dengan Harga -->
+    <h2 class="section-title" id="menu">Pilihan Menu Minang</h2>
+    <div class="menu-grid">
+        <div class="menu-category">
+            <h3>Ayam</h3>
+            <ul>
+                <li>Ayam Pop <span class="menu-price">Rp 20.000</span></li>
+                <li>Ayam Gulai <span class="menu-price">Rp 18.000</span></li>
+                <li>Ayam Bakar <span class="menu-price">Rp 18.000</span></li>
+                <li>Rendang Ayam <span class="menu-price">Rp 20.000</span></li>
+            </ul>
+        </div>
+        <div class="menu-category">
+            <h3>Daging</h3>
+            <ul>
+                <li>Rendang Daging <span class="menu-price">Rp 25.000</span></li>
+                <li>Dendeng Batokok <span class="menu-price">Rp 25.000</span></li>
+                <li>Gulai Daging <span class="menu-price">Rp 25.000</span></li>
+                <li>Empal Gepuk <span class="menu-price">Rp 22.000</span></li>
+            </ul>
+        </div>
+        <div class="menu-category">
+            <h3>Sayuran</h3>
+            <ul>
+                <li>Gulai Nangka <span class="menu-price">Rp 10.000</span></li>
+                <li>Sayur Daun Singkong <span class="menu-price">Rp 8.000</span></li>
+                <li>Terong Balado <span class="menu-price">Rp 10.000</span></li>
+                <li>Lombok Ijo <span class="menu-price">Rp 8.000</span></li>
+            </ul>
+        </div>
+        <div class="menu-category">
+            <h3>Ikan</h3>
+            <ul>
+                <li>Ikan Bakar <span class="menu-price">Rp 22.000</span></li>
+                <li>Gulai Ikan <span class="menu-price">Rp 22.000</span></li>
+                <li>Ikan Asam Padeh <span class="menu-price">Rp 22.000</span></li>
+                <li>Dendeng Ikan <span class="menu-price">Rp 20.000</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Cara Pesan -->
+    <div class="order-guide" id="cara-pesan">
+        <h2 class="section-title" style="margin-top:0; margin-bottom:15px;">Cara Pesan Catering</h2>
+        <div class="guide-steps">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <h4>Konsultasi</h4>
+                <p>Diskusikan kebutuhan & survey lokasi.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <h4>Pilih Menu</h4>
+                <p>Tentukan menu sesuai budget.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <h4>Konfirmasi & DP</h4>
+                <p>Bayar DP 50% untuk booking.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">4</div>
+                <h4>Eksekusi Acara</h4>
+                <p>Tim kami siap sajikan yang terbaik.</p>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <p>Hubungi layanan pelanggan kami melalui WhatsApp:</p>
+            <p><strong>WhatsApp:</strong> 0895-3370-98877</p>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20ingin%20konsultasi%20mengenai%20pesanan%20catering." class="whatsapp-btn" target="_blank">
+                <i class="fab fa-whatsapp"></i> Chat WhatsApp Sekarang
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Alam Salero Nusantara. Hak Cipta Dilindungi.</p>
+    </footer>
+
+</body>
+</html>
