@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alam Salero Nusantara - Layanan Catering & Reservasi Premium</title>
+    
+    <!-- Google Fonts: Playfair Display untuk kesan mewah, Poppins untuk teks modern -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Palet Warna Elegan */
+            --bg-body: #FDFBF7; /* Cream sangat muda */
+            --bg-surface: #FFFFFF;
+            --primary-maroon: #5a1827;
+            --primary-dark: #3a0e18;
+            --accent-gold: #C5A059; /* Emas kalem/Champagne */
+            --accent-gold-light: #E8D8B8;
+            --text-dark: #2C2C2C;
+            --text-muted: #6B6B6B;
+            --border-light: #EAE3D9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- Animasi --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade {
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        /* --- Header / Navbar --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            color: var(--primary-maroon);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-gold);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            padding: 80px 5% 50px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--primary-maroon);
+            margin-bottom: 15px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            margin: 25px auto;
+        }
+
+        /* --- Section Titles --- */
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            color: var(--primary-maroon);
+            margin: 60px 0 30px;
+            font-weight: 600;
+            padding: 0 5%;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: -50px;
+            margin-top: 40px;
+            font-weight: 500;
+        }
+
+        /* --- Features --- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto 50px;
+            padding: 0 5%;
+        }
+
+        .feature-card {
+            background: transparent;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .feature-card i {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            color: var(--primary-maroon);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Premium Packages (Catering Box) --- */
+        .packages-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background: var(--bg-surface);
+            border-radius: 2px;
+            padding: 35px 25px;
+            border: 1px solid var(--border-light);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(90, 24, 39, 0.08);
+        }
+
+        .package-card.highlight {
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 40px rgba(197, 160, 89, 0.15);
+        }
+
+        .package-card.highlight::before {
+            height: 4px;
+            background: var(--primary-maroon);
+        }
+
+        .package-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .package-header h3 {
+            font-size: 1.3rem;
+            color: var(--primary-maroon);
+        }
+
+        .package-header .price {
+            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-dark);
+            margin-top: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .package-body {
+            flex-grow: 1;
+            margin-bottom: 25px;
+        }
+
+        .package-body ul {
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .package-body ul li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .package-body ul li::before {
+            content: '•';
+            color: var(--accent-gold);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .package-choices {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-light);
+            line-height: 1.5;
+        }
+
+        .package-choices strong {
+            color: var(--primary-maroon);
+            font-weight: 500;
+        }
+
+        /* --- Buttons --- */
+        .btn-elegant {
+            display: inline-block;
+            width: 100%;
+            background: transparent;
+            color: var(--primary-maroon);
+            border: 1px solid var(--primary-maroon);
+            text-align: center;
+            padding: 12px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-elegant:hover {
+            background: var(--primary-maroon);
+            color: var(--bg-surface);
+        }
+
+        .btn-filled {
+            background: var(--primary-maroon);
+            color: var(--bg-surface);
+            border: 1px solid var(--primary-maroon);
+        }
+
+        .btn-filled:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        /* --- Live Cooking --- */
+        .live-cooking-container {
+            max-width: 1000px; 
+            margin: 60px auto 20px; 
+            padding: 0 5%;
+        }
+
+        /* --- Menu Restoran Mewah --- */
+        .menu-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .menu-category h3 {
+            font-size: 1.2rem;
+            color: var(--primary-maroon);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--accent-gold-light);
+            padding-bottom: 10px;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+
+        .menu-name {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            background: var(--bg-body);
+            padding-right: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted var(--accent-gold);
+            margin: 0 10px;
+            position: relative;
+            top: -4px;
+            z-index: 1;
+        }
+
+        .menu-price {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--primary-maroon);
+            font-size: 0.95rem;
+            background: var(--bg-body);
+            padding-left: 10px;
+            z-index: 2;
+        }
+
+        /* --- Reservasi VIP --- */
+        .reservasi-container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 5%;
+        }
+        
+        .reservasi-card {
+            background: var(--primary-maroon);
+            border-radius: 2px;
+            padding: 50px;
+            color: var(--bg-surface);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            box-shadow: 0 20px 40px rgba(90, 24, 39, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reservasi-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(197, 160, 89, 0.2);
+            border-radius: 50%;
+        }
+
+        .reservasi-info { 
+            flex: 1; 
+            min-width: 300px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .reservasi-info h3 { 
+            font-size: 2rem; 
+            margin-bottom: 15px; 
+            color: var(--accent-gold); 
+        }
+        
+        .reservasi-info p { 
+            font-size: 0.95rem; 
+            opacity: 0.9; 
+            margin-bottom: 25px; 
+            max-width: 500px;
+        }
+        
+        .reservasi-features {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .reservasi-features li {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .reservasi-features i { 
+            color: var(--accent-gold); 
+        }
+
+        .reservasi-action {
+            flex: 0 1 auto;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            padding: 30px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 2px;
+            width: 100%;
+            max-width: 320px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .whatsapp-btn-gold {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--accent-gold);
+            color: var(--primary-maroon);
+            padding: 15px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn-gold:hover {
+            background: #d4b271;
+            transform: translateY(-2px);
+        }
+
+        /* --- Order Guide Minimalist --- */
+        .guide-steps { 
+            max-width: 900px;
+            margin: 0 auto 50px;
+            padding: 0 5%;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 30px; 
+        }
+        
+        .step-item { 
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number { 
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--border-light);
+            line-height: 1;
+            margin-bottom: -15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-item h4 { 
+            font-size: 1.1rem; 
+            color: var(--primary-maroon); 
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-item p { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+        }
+
+        /* --- Footer --- */
+        footer { 
+            text-align: center; 
+            padding: 30px 5%; 
+            background: var(--primary-dark); 
+            color: rgba(255, 255, 255, 0.7); 
+            margin-top: 60px; 
+            font-size: 0.85rem; 
+            border-top: 4px solid var(--accent-gold);
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { padding: 50px 5% 30px; }
+            .reservasi-card { padding: 30px 20px; }
+            .reservasi-features { grid-template-columns: 1fr; }
+            .menu-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="animate-fade">
+        <div class="logo">Alam Salero</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="#paket">Paket Box</a></li>
+            <li><a href="#menu">Menu Minang</a></li>
+            <li><a href="#reservasi">Reservasi VIP</a></li>
+            <li><a href="#cara-pesan">Cara Pesan</a></li>
+        </ul>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero animate-fade" style="animation-delay: 0.2s;">
+        <h1>Sajian Klasik, Layanan Eksklusif.</h1>
+        <div class="hero-divider"></div>
+        <p>Hadirkan pengalaman kuliner autentik Minangkabau dengan sentuhan premium untuk setiap momen istimewa dan acara bisnis Anda.</p>
+    </section>
+
+    <!-- Features -->
+    <section class="features animate-fade" style="animation-delay: 0.3s;">
+        <div class="feature-card">
+            <i class="fas fa-box-open"></i>
+            <h3>Premium Packaging</h3>
+            <p>Dikemas secara elegan dan eksklusif untuk menjaga kualitas hidangan.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-check-circle"></i>
+            <h3>Rasa Autentik</h3>
+            <p>Bahan pilihan dengan cita rasa rempah khas Minang yang terjaga.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-truck"></i>
+            <h3>Tepat Waktu</h3>
+            <p>Layanan pesan antar profesional yang menjamin pesanan tiba on-time.</p>
+        </div>
+    </section>
+
+    <!-- Paket Catering Nasi Box -->
+    <p class="section-subtitle" id="paket">Pilihan Catering Nasi Box</p>
+    <h2 class="section-title">Paket Salero Spesial</h2>
+    
+    <div class="packages-container">
+        
+        <!-- Paket Salero Hemat -->
+        <div class="package-card animate-fade">
+            <div class="package-header">
+                <h3>Paket Salero Hemat</h3>
+                <div class="price">Rp 28.000 <span style="font-size:0.8rem; font-family:'Poppins',sans-serif; color:var(--text-muted); font-style:normal;">/ box</span></div>
+            </div>
+            <div class="package-body">
+                <ul>
+                    <li>Nasi Putih</li>
+                    <li>Ayam Broiler</li>
+                    <li>Sayur Khas Minang</li>
+                    <li>Sambal</li>
+                </ul>
+                <div class="package-choices">
+                    <strong>Pilihan Ayam:</strong> Goreng / Gulai / Balado
+                </div>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Salero%20Hemat." class="btn-elegant" target="_blank">
+                Pesan Sekarang
+            </a>
+        </div>
+
+        <!-- Paket Salero 1 -->
+        <div class="package-card animate-fade">
+            <div class="package-header">
+                <h3>Paket Salero 1</h3>
+                <div class="price">Rp 33.000 <span style="font-size:0.8rem; font-family:'Poppins',sans-serif; color:var(--text-muted); font-style:normal;">/ box</span></div>
+            </div>
+            <div class="package-body">
+                <ul>
+                    <li>Nasi Putih</li>
+                    <li>Ayam Spesial</li>
+                    <li>Sayur Khas Minang</li>
+                    <li>Sambal Ijo</li>
+                </ul>
+                <div class="package-choices">
+                    <strong>Pilihan Ayam:</strong> Goreng / Gulai / Balado / Rendang
+                </div>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Salero%201." class="btn-elegant" target="_blank">
+                Pesan Sekarang
+            </a>
+        </div>
+
+        <!-- Paket Salero 2 -->
+        <div class="package-card animate-fade">
+            <div class="package-header">
+                <h3>Paket Salero 2</h3>
+                <div class="price">Rp 39.000 <span style="font-size:0.8rem; font-family:'Poppins',sans-serif; color:var(--text-muted); font-style:normal;">/ box</span></div>
+            </div>
+            <div class="package-body">
+                <ul>
+                    <li>Nasi Putih</li>
+                    <li>Rendang Daging Spesial</li>
+                    <li>Sayur Khas Minang</li>
+                    <li>Sambal Ijo</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Salero%202." class="btn-elegant" target="_blank">
+                Pesan Sekarang
+            </a>
+        </div>
+
+        <!-- Paket Salero 3 -->
+        <div class="package-card animate-fade">
+            <div class="package-header">
+                <h3>Paket Salero 3</h3>
+                <div class="price">Rp 45.000 <span style="font-size:0.8rem; font-family:'Poppins',sans-serif; color:var(--text-muted); font-style:normal;">/ box</span></div>
+            </div>
+            <div class="package-body">
+                <ul>
+                    <li>Nasi Putih</li>
+                    <li>Ayam Spesial</li>
+                    <li>Telur / Perkedel</li>
+                    <li>Sayur Khas Minang</li>
+                    <li>Sambal Ijo</li>
+                </ul>
+                <div class="package-choices">
+                    <strong>Pilihan Ayam:</strong> Goreng / Gulai / Balado / Rendang<br>
+                    <strong>Pilihan Lauk 2:</strong> Telur Balado / Telur Gulai / Dadar Minang / Perkedel
+                </div>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Salero%203." class="btn-elegant" target="_blank">
+                Pesan Sekarang
+            </a>
+        </div>
+
+        <!-- Paket Salero 4 -->
+        <div class="package-card animate-fade">
+            <div class="package-header">
+                <h3>Paket Salero 4</h3>
+                <div class="price">Rp 50.000 <span style="font-size:0.8rem; font-family:'Poppins',sans-serif; color:var(--text-muted); font-style:normal;">/ box</span></div>
+            </div>
+            <div class="package-body">
+                <ul>
+                    <li>Nasi Putih</li>
+                    <li>Rendang Daging Spesial</li>
+                    <li>Telur / Perkedel</li>
+                    <li>Sayur Khas Minang</li>
+                    <li>Sambal Ijo</li>
+                </ul>
+                <div class="package-choices">
+                    <strong>Pilihan Lauk 2:</strong> Telur Balado / Telur Gulai / Dadar Minang / Perkedel
+                </div>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Salero%204." class="btn-elegant" target="_blank">
+                Pesan Sekarang
+            </a>
+        </div>
+
+        <!-- Paket Salero Istimewa (Highlight) -->
+        <div class="package-card highlight animate-fade">
+            <div class="package-header">
+                <div style="position: absolute; top: 15px; right: -10px; background: var(--accent-gold); color: #fff; padding: 5px 15px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                    Best Seller
+                </div>
+                <h3>Paket Salero Istimewa</h3>
+                <div class="price">Rp 60.000 <span style="font-size:0.8rem; font-family:'Poppins',sans-serif; color:var(--text-muted); font-style:normal;">/ box</span></div>
+            </div>
+            <div class="package-body">
+                <ul>
+                    <li>Nasi Putih</li>
+                    <li>Ayam Spesial</li>
+                    <li>Rendang Daging Spesial</li>
+                    <li>Sayur Khas Minang</li>
+                    <li>Sambal Ijo</li>
+                </ul>
+                <div class="package-choices">
+                    <strong>Pilihan Ayam:</strong> Goreng / Gulai / Balado / Rendang
+                </div>
+            </div>
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20Paket%20Salero%20Istimewa." class="btn-elegant btn-filled" target="_blank">
+                Pesan Sekarang
+            </a>
+        </div>
+
+    </div>
+
+    <!-- SEKSI CATERING PANGGILAN / PONDOKAN (LIVE COOKING) -->
+    <div class="live-cooking-container animate-fade">
+        <div style="background: var(--bg-surface); border: 1px solid var(--accent-gold); padding: 50px 30px; border-radius: 2px; position: relative; text-align: center; box-shadow: 0 15px 35px rgba(197, 160, 89, 0.08);">
+            
+            <div style="width: 70px; height: 70px; background: var(--bg-body); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: -85px auto 20px; border: 1px solid var(--accent-gold);">
+                <i class="fas fa-fire-burner" style="font-size: 1.8rem; color: var(--accent-gold);"></i>
+            </div>
+            
+            <p class="section-subtitle" style="margin-top: 0; margin-bottom: 10px;">Live Cooking Experience</p>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--primary-maroon); margin-bottom: 15px;">Catering Pondokan</h3>
+            
+            <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 700px; margin: 0 auto 25px;">
+                Berikan pengalaman interaktif bagi tamu undangan Anda. Chef profesional kami siap hadir langsung di lokasi acara untuk menyajikan hidangan Minang khas secara <i>live</i> dan selalu hangat.
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 35px;">
+                <span style="background: transparent; color: var(--primary-maroon); padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border-light);">Sate Padang Pariaman</span>
+                <span style="background: transparent; color: var(--primary-maroon); padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border-light);">Soto Padang</span>
+                <span style="background: transparent; color: var(--primary-maroon); padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border-light);">Martabak Mesir</span>
+                <span style="background: transparent; color: var(--primary-maroon); padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border-light);">Lontong Sayur Spesial</span>
+            </div>
+
+            <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20tertarik%20dengan%20layanan%20Catering%20Pondokan." class="btn-elegant" style="max-width: 250px; margin: 0 auto;" target="_blank">
+                Konsultasi Menu
+            </a>
+        </div>
+    </div>
+
+    <!-- Pilihan Menu Restoran -->
+    <p class="section-subtitle" id="menu">Katalog Kuliner</p>
+    <h2 class="section-title">Pilihan Menu Minang</h2>
+    
+    <div class="menu-grid">
+        <!-- Kategori Ayam & Daging -->
+        <div>
+            <div class="menu-category">
+                <h3>Ayam & Daging Spesial</h3>
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <span class="menu-name">Rendang Daging Sapi</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">25K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Dendeng Batokok</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">25K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Ayam Pop Spesial</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">20K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Ayam Gulai Khas</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">18K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Empal Gepuk</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">22K</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Kategori Ikan & Sayur -->
+        <div>
+            <div class="menu-category">
+                <h3>Olahan Ikan & Sayur</h3>
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <span class="menu-name">Ikan Bakar Rempah</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">22K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Ikan Asam Padeh</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">22K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Gulai Nangka Muda</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">10K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Terong Balado</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">10K</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="menu-name">Sayur Daun Singkong</span>
+                        <div class="menu-dots"></div>
+                        <span class="menu-price">8K</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKSI RESERVASI VIP 
+    <div class="reservasi-container" id="reservasi">
+        <div class="reservasi-card">
+            <div class="reservasi-info">
+                <h3>Reservasi Ruang VIP & Dine-In</h3>
+                <p>Tingkatkan pengalaman bersantap Anda. Sempurna untuk menjamu relasi bisnis, rapat penting, atau perayaan hangat bersama keluarga tercinta dengan privasi maksimal.</p>
+                <ul class="reservasi-features">
+                    <li><i class="fas fa-check"></i> Ruang VIP ber-AC & Kedap Suara</li>
+                    <li><i class="fas fa-check"></i> Pelayanan Waiter Khusus (Dedicated)</li>
+                    <li><i class="fas fa-check"></i> Area Parkir Luas & Aman</li>
+                    <li><i class="fas fa-check"></i> Pre-Order Menu Tanpa Antre</li>
+                </ul>
+            </div>
+            <div class="reservasi-action">
+                <p style="font-size: 0.85rem; margin-bottom: 20px; color: rgba(255,255,255,0.9); font-weight: 300;">Ketersediaan meja VIP terbatas. Silakan hubungi representatif kami.</p>
+                <a href="https://wa.me/62895337098877?text=Halo%20Alam%20Salero%20Nusantara,%20saya%20ingin%20Reservasi%20Ruang%20VIP." class="whatsapp-btn-gold" target="_blank">
+                    <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Reservasi Meja
+                </a>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Cara Pesan Minimalist -->
+    <p class="section-subtitle" id="cara-pesan">Panduan Klien</p>
+    <h2 class="section-title" style="margin-bottom: 50px;">Langkah Pemesanan</h2>
+    
+    <div class="guide-steps">
+        <div class="step-item">
+            <div class="step-number">1</div>
+            <h4>Konsultasi</h4>
+            <p>Hubungi admin kami untuk menyesuaikan porsi dan preferensi menu.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-number">2</div>
+            <h4>Penawaran</h4>
+            <p>Kami akan mengirimkan rincian harga (quotation) resmi kepada Anda.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-number">3</div>
+            <h4>Konfirmasi</h4>
+            <p>Pembayaran DP (Uang Muka) untuk mengamankan slot pesanan Anda.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-number">4</div>
+            <h4>Pengiriman</h4>
+            <p>Pesanan tiba di lokasi dengan tepat waktu dan presentasi sempurna.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Alam Salero Nusantara. Hak Cipta Dilindungi.</p>
+    </footer>
+
+</body>
+</html>
