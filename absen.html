@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absensi - Alam Salero Nusantara</title>
+    <title>Absensi - Lestoran Alam Salero Nusantara</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Face API JS -->
@@ -115,12 +115,8 @@
                         <label class="block text-sm font-bold text-slate-700 mb-1">Lokasi Kerja</label>
                         <select id="employeeLocation" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
                             <option value="" disabled selected>Pilih Lokasi...</option>
-                            <option value="Pusat">Roa Malaka</option>
-                            <option value="Pusat">Ciledug</option>
-                            <option value="Cabang Sentral Park">Cabang Sentral Park</option>
-                            <option value="Cabang Polda Metro Jaya">Cabang Polda Metro Jaya</option>
-                            <option value="Cabang The Brizze">Cabang The Brizze</option>
-                            <option value="Cabang Thamrin City">Cabang Thamrin City</option>
+                            <option value="Pusat">Pusat</option>
+                            <option value="Cabang">Cabang</option>
                         </select>
                     </div>
                 </div>
@@ -164,6 +160,7 @@
         let labeledFaceDescriptors = [];
         let faceMatcher = null;
         let scanInterval = null;
+        let registerInterval = null; // Tambahan variabel untuk tracker pendaftaran
         let currentMode = ''; 
         let isProcessing = false;
         
@@ -236,7 +233,10 @@
                 document.getElementById('employeeLocation').value = '';
                 
                 document.getElementById('scanStatus').textContent = 'Isi data & posisikan wajah Anda';
-                startCamera();
+                startCamera().then(() => {
+                    // Mulai pelacak wajah visual setelah kamera menyala
+                    setTimeout(startRegisterTracking, 1000);
+                });
             }
         }
 
@@ -260,6 +260,7 @@
 
         function stopCameraAndReturn() {
             if (scanInterval) clearInterval(scanInterval);
+            if (registerInterval) clearInterval(registerInterval); // Hentikan tracker pendaftaran
             if (video.srcObject) {
                 video.srcObject.getTracks().forEach(t => t.stop());
                 video.srcObject = null;
@@ -282,6 +283,26 @@
             });
         }
 
+        // --- FITUR BARU: PELACAK WAJAH SAAT PENDAFTARAN ---
+        function startRegisterTracking() {
+            const displaySize = { width: video.videoWidth, height: video.videoHeight };
+            registerInterval = setInterval(async () => {
+                if (isProcessing) return;
+                
+                // Deteksi wajah dengan tingkat toleransi lebih rendah (0.4) agar lebih mudah terdeteksi
+                const detection = await faceapi.detectSingleFace(video, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.4 }));
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (detection) {
+                    const resizedDetection = faceapi.resizeResults(detection, displaySize);
+                    // Gambar kotak hijau menandakan wajah sudah terkunci
+                    const box = new faceapi.draw.DrawBox(resizedDetection.box, { label: "Wajah Terkunci", boxColor: "#10b981" });
+                    box.draw(canvas);
+                }
+            }, 300); // Cek setiap 300 milidetik
+        }
+
         // --- MENYIMPAN WAJAH BARU LANGSUNG KE CLOUD ---
         async function captureAndRegister() {
             const name = document.getElementById('employeeName').value.trim();
@@ -295,19 +316,33 @@
             if (isProcessing) return;
             isProcessing = true;
             
+            // --- EFEK SNAPSHOT (KAMERA FREEZE / DIAM) ---
+            video.pause(); // Hentikan video agar wajah terkunci
+            
+            // Efek kedip seperti blitz kamera
+            const container = document.querySelector('.video-container');
+            container.style.opacity = '0.2';
+            setTimeout(() => { container.style.opacity = '1'; }, 150);
+            
             const btn = document.getElementById('btnRegister');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengunggah ke Cloud...';
-            document.getElementById('scanStatus').textContent = "Memproses wajah...";
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menganalisa Foto...';
+            document.getElementById('scanStatus').textContent = "Menganalisa gambar yang ditangkap...";
 
             try {
-                const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
+                // Turunkan minimal confidence agar tidak terlalu ketat (0.4 = 40% yakin itu wajah)
+                const detection = await faceapi.detectSingleFace(video, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.4 })).withFaceLandmarks().withFaceDescriptor();
+                
                 if (!detection) {
-                    showToast("Wajah tidak terdeteksi!", "error");
-                    resetRegBtn(btn); return;
+                    showToast("Wajah tidak jelas. Silakan jepret ulang!", "error");
+                    resetRegBtn(btn); 
+                    video.play(); // Putar kembali kamera jika gagal
+                    return;
                 }
 
                 // Convert array Float32 ke array biasa agar bisa dikirim sebagai JSON
                 const descriptorArray = Array.from(detection.descriptor);
+
+                document.getElementById('scanStatus').textContent = "Mengunggah ke Cloud...";
 
                 const payload = {
                     action: "register",
@@ -332,8 +367,9 @@
             } catch (error) {
                 console.error(error);
                 showToast("Gagal menyimpan ke cloud.", "error");
+                resetRegBtn(btn);
+                video.play(); // Putar kembali kamera jika internet bermasalah
             }
-            resetRegBtn(btn);
         }
 
         function resetRegBtn(btn) {
