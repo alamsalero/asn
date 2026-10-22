@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absensi - Lestoran Alam Salero Nusantara</title>
+    <title>Absensi PIN - Lestoran Alam Salero Nusantara</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Face API JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/dist/face-api.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .video-container {
-            position: relative; width: 100%; max-width: 400px; margin: 0 auto;
-            border-radius: 1rem; overflow: hidden; background: #000;
+        .numpad-btn {
+            transition: all 0.1s;
         }
-        #videoElement { width: 100%; height: 100%; object-fit: cover; display: block; }
-        #overlayCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .numpad-btn:active {
+            transform: scale(0.9);
+            background-color: #e2e8f0;
+        }
         
         #toast {
             visibility: hidden; min-width: 250px; background-color: rgba(15, 23, 42, 0.95);
@@ -36,11 +35,11 @@
         <div class="relative">
             <div class="w-20 h-20 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
             <div class="absolute inset-0 flex items-center justify-center">
-                <i class="fas fa-cloud-download-alt text-blue-600 text-xl"></i>
+                <i class="fas fa-database text-blue-600 text-xl"></i>
             </div>
         </div>
-        <h2 class="text-2xl font-extrabold text-slate-800 mt-6 tracking-tight" id="loadingText">Memuat Mesin AI...</h2>
-        <p class="text-sm text-slate-500 mt-2 font-medium" id="loadingSubText">Menginisialisasi sistem...</p>
+        <h2 class="text-2xl font-extrabold text-slate-800 mt-6 tracking-tight" id="loadingText">Menghubungkan Server...</h2>
+        <p class="text-sm text-slate-500 mt-2 font-medium" id="loadingSubText">Mengunduh data karyawan</p>
     </div>
 
     <!-- Main Content -->
@@ -52,25 +51,24 @@
             <!-- LOGO & HEADER -->
             <div class="flex flex-col items-center mb-8">
                 <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 mb-3 transform hover:scale-105 transition-transform duration-300">
-                    <!-- GANTI LOGO DISINI -->
-                    <img src="logo.png" alt="Logo Instansi" class="w-16 h-16 object-contain drop-shadow-sm" id="mainLogo">
+                    <img src="logo.png" alt="Logo Instansi" class="w-16 h-16 object-contain drop-shadow-sm" id="mainLogo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063822.png'">
                 </div>
                 <h1 class="text-2xl font-extrabold text-slate-800 text-center tracking-tight leading-tight">Lestoran Alam Salero Nusantara</h1>
-                <p class="text-xs text-blue-600 font-bold mt-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">Sistem Absensi Cloud AI</p>
+                <p class="text-xs text-blue-600 font-bold mt-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">Sistem Absensi PIN</p>
             </div>
 
             <div class="grid grid-cols-1 gap-4">
-                <button onclick="showView('register')" class="group relative overflow-hidden bg-white border-2 border-slate-200 hover:border-blue-500 text-slate-700 py-4 rounded-2xl font-bold text-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <button onclick="showRegister()" class="group relative overflow-hidden bg-white border-2 border-slate-200 hover:border-blue-500 text-slate-700 py-4 rounded-2xl font-bold text-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <i class="fas fa-user-plus mr-3 text-blue-500 group-hover:scale-110 transition-transform duration-300"></i> 
-                    <span>1. Daftar Wajah Baru</span>
+                    <span>1. Daftar PIN Karyawan</span>
                 </button>
                 
-                <button onclick="startScan('masuk')" class="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-[0_10px_20px_rgba(16,185,129,0.3)] hover:-translate-y-1">
+                <button onclick="showAbsen('masuk')" class="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-[0_10px_20px_rgba(16,185,129,0.3)] hover:-translate-y-1">
                     <i class="fas fa-sign-in-alt mr-3 group-hover:translate-x-1 transition-transform duration-300"></i> 
                     <span>2. Absen Masuk</span>
                 </button>
                 
-                <button onclick="startScan('pulang')" class="group relative overflow-hidden bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-[0_10px_20px_rgba(244,63,94,0.3)] hover:-translate-y-1">
+                <button onclick="showAbsen('pulang')" class="group relative overflow-hidden bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-[0_10px_20px_rgba(244,63,94,0.3)] hover:-translate-y-1">
                     <i class="fas fa-sign-out-alt mr-3 group-hover:translate-x-1 transition-transform duration-300"></i> 
                     <span>3. Absen Pulang</span>
                 </button>
@@ -78,71 +76,98 @@
             
             <div class="mt-8 pt-5 border-t border-slate-200/60 flex flex-col items-center">
                 <div class="text-xs font-bold text-slate-500 flex items-center">
-                    <i class="fas fa-cloud-check mr-2 text-blue-500"></i> Database Cloud Aktif (<span id="userCount" class="mx-1 text-blue-600">0</span> Karyawan)
+                    <i class="fas fa-cloud-check mr-2 text-blue-500"></i> Database PIN Aktif (<span id="userCount" class="mx-1 text-blue-600">0</span> Karyawan)
                 </div>
-                <!-- Tombol sync manual jika diperlukan -->
                 <button onclick="syncDataFromCloud()" class="mt-3 text-[10px] text-slate-400 hover:text-blue-500 transition-colors flex items-center">
                     <i class="fas fa-sync-alt mr-1"></i> Sinkronkan Ulang Data
                 </button>
             </div>
         </div>
 
-        <!-- CAMERA VIEW -->
-        <div id="cameraView" class="hidden w-full bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-5 sm:p-6 transition-all flex flex-col items-center">
-            
+        <!-- FORM REGISTER VIEW -->
+        <div id="registerView" class="hidden w-full bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 sm:p-8 transition-all flex flex-col">
             <div class="w-full flex justify-between items-center mb-6">
                 <div class="flex items-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3063/3063822.png" alt="Mini Logo" class="w-8 h-8 mr-3 object-contain">
-                    <h2 id="cameraTitle" class="text-xl font-extrabold text-slate-800 tracking-tight">Kamera</h2>
+                    <div class="bg-blue-100 p-2 rounded-lg mr-3 text-blue-600"><i class="fas fa-user-plus"></i></div>
+                    <h2 class="text-xl font-extrabold text-slate-800 tracking-tight">Daftar Karyawan</h2>
                 </div>
-                <button onclick="stopCameraAndReturn()" class="text-slate-400 hover:text-red-500 bg-white hover:bg-red-50 shadow-sm border border-slate-100 rounded-full w-10 h-10 flex items-center justify-center transition-all hover:scale-105">
+                <button onclick="returnToMenu()" class="text-slate-400 hover:text-red-500 bg-white hover:bg-red-50 shadow-sm border border-slate-100 rounded-full w-10 h-10 flex items-center justify-center transition-all hover:scale-105">
                     <i class="fas fa-times fa-lg"></i>
                 </button>
             </div>
 
-            <!-- Formulir Pendaftaran -->
-            <div id="registerInputContainer" class="w-full mb-5 hidden text-left">
-                <div class="flex flex-col gap-3">
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap</label>
-                        <input type="text" id="employeeName" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">No HP / WhatsApp</label>
-                        <input type="tel" id="employeePhone" placeholder="Contoh: 0812345678" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Lokasi Kerja</label>
-                        <select id="employeeLocation" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
-                            <option value="" disabled selected>Pilih Lokasi...</option>
-                            <option value="Pusat">Pusat</option>
-                            <option value="Cabang">Cabang</option>
-                        </select>
-                    </div>
+            <div class="flex flex-col gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap</label>
+                    <input type="text" id="regName" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">No HP / WhatsApp</label>
+                    <input type="tel" id="regPhone" placeholder="Contoh: 0812345678" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Lokasi Kerja</label>
+                    <select id="regLocation" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
+                        <option value="" disabled selected>Pilih Lokasi...</option>
+                        <optgroup label="Pusat">
+                            <option value="Roa Malaka">Roa Malaka</option>
+                            <option value="Ciledug">Ciledug</option>
+                        </optgroup>
+                        <optgroup label="Cabang">
+                            <option value="Polda Metro Jaya">Polda Metro Jaya</option>
+                            <option value="Thamrin City">Thamrin City</option>
+                            <option value="The Brizze">The Brizze</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Buat PIN (4-6 Angka)</label>
+                    <input type="password" id="regPin" placeholder="Buat PIN Rahasia" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-extrabold tracking-[0.3em] text-slate-700 text-center text-lg">
                 </div>
             </div>
 
-            <!-- Kamera -->
-            <div class="video-container shadow-2xl ring-4 ring-slate-50/50 rounded-2xl overflow-hidden relative bg-slate-900 w-full aspect-[3/4] flex items-center justify-center">
-                <video id="videoElement" autoplay muted playsinline></video>
-                <canvas id="overlayCanvas"></canvas>
-            </div>
+            <button onclick="submitRegister()" id="btnSubmitReg" class="w-full mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fas fa-save mr-2"></i> Simpan Karyawan
+            </button>
+        </div>
 
-            <div class="mt-5 w-full bg-blue-50/80 rounded-xl p-3 flex items-center justify-center border border-blue-100/50">
-                <i class="fas fa-info-circle text-blue-500 mr-2"></i>
-                <p id="scanStatus" class="text-sm font-bold text-blue-700">Menyiapkan kamera...</p>
-            </div>
-
-            <div id="registerActions" class="w-full mt-5 hidden">
-                <button onclick="captureAndRegister()" id="btnRegister" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center">
-                    <i class="fas fa-cloud-upload-alt mr-2"></i> Simpan ke Cloud
+        <!-- NUMPAD ABSEN VIEW -->
+        <div id="absenView" class="hidden w-full bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 transition-all flex flex-col items-center">
+            <div class="w-full flex justify-between items-center mb-4">
+                <div class="flex items-center">
+                    <div id="absenIconBox" class="p-2 rounded-lg mr-3 text-white"><i id="absenIcon" class="fas"></i></div>
+                    <h2 id="absenTitle" class="text-xl font-extrabold text-slate-800 tracking-tight">Judul</h2>
+                </div>
+                <button onclick="returnToMenu()" class="text-slate-400 hover:text-red-500 bg-white hover:bg-red-50 shadow-sm border border-slate-100 rounded-full w-10 h-10 flex items-center justify-center transition-all hover:scale-105">
+                    <i class="fas fa-times fa-lg"></i>
                 </button>
             </div>
-            
-            <div id="scanActions" class="w-full mt-5 hidden">
-                 <div class="flex justify-center items-center text-slate-600 text-sm font-semibold bg-white py-3 rounded-xl border border-slate-200 shadow-sm">
-                    <i class="fas fa-radar fa-spin text-blue-500 mr-2 text-lg"></i> Memindai wajah...
-                 </div>
+
+            <!-- Layar PIN -->
+            <div class="w-full mb-6">
+                <p class="text-center text-sm text-slate-500 mb-2 font-bold">Masukkan PIN Anda</p>
+                <div class="w-full bg-slate-100 border-2 border-slate-200 h-16 rounded-xl flex items-center justify-center">
+                    <input type="password" id="displayPin" readonly class="bg-transparent w-full text-center text-3xl font-extrabold tracking-[0.5em] text-slate-800 outline-none placeholder-slate-300" placeholder="••••">
+                </div>
+            </div>
+
+            <!-- Numpad Kasir -->
+            <div class="grid grid-cols-3 gap-3 w-full max-w-[280px]">
+                <button onclick="typePin('1')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">1</button>
+                <button onclick="typePin('2')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">2</button>
+                <button onclick="typePin('3')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">3</button>
+                
+                <button onclick="typePin('4')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">4</button>
+                <button onclick="typePin('5')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">5</button>
+                <button onclick="typePin('6')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">6</button>
+                
+                <button onclick="typePin('7')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">7</button>
+                <button onclick="typePin('8')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">8</button>
+                <button onclick="typePin('9')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">9</button>
+                
+                <button onclick="clearPin()" class="numpad-btn bg-rose-50 border border-rose-200 text-rose-500 font-bold text-xl py-4 rounded-xl shadow-sm hover:bg-rose-100">C</button>
+                <button onclick="typePin('0')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">0</button>
+                <button onclick="verifyPinAndAbsen()" id="btnSubmitAbsen" class="numpad-btn bg-blue-500 border border-blue-600 text-white font-bold text-xl py-4 rounded-xl shadow-sm hover:bg-blue-600"><i class="fas fa-check"></i></button>
             </div>
         </div>
 
@@ -150,294 +175,194 @@
     <div id="toast">Notifikasi</div>
 
     <script>
-        // --- 🔴 WAJIB GANTI URL DI BAWAH INI 🔴 ---
-        const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtbjVObdhp9_D3AThHSmK5e-0MeDaRo0syuk1LjBbWkKlhG3GqUnLI1Dn_z4c_fyRuDw/exec";
+        // --- 🔴 PASTE URL APPSCRIPT TERBARU ANDA DISINI 🔴 ---
+        const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKzerd0bhp1u_wWh7rWWwyKqzrW5RQRJxfsQoZ4ahJeketPkNrpBrB5FzbZaZUl3Z-gA/exec";
         
-        const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
-        
-        let video = document.getElementById('videoElement');
-        let canvas = document.getElementById('overlayCanvas');
-        let labeledFaceDescriptors = [];
-        let faceMatcher = null;
-        let scanInterval = null;
-        let registerInterval = null; // Tambahan variabel untuk tracker pendaftaran
-        let currentMode = ''; 
-        let isProcessing = false;
-        
-        // Data karyawan yang ditarik dari Cloud
         let employeeData = []; 
+        let currentMode = ''; 
+        let currentPin = '';
+        let isProcessing = false;
 
         async function init() {
-            try {
-                document.getElementById('loadingText').textContent = "Memuat AI...";
-                await Promise.all([
-                    faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
-                    faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-                    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
-                ]);
-                
-                // Setelah AI siap, download data dari Cloud
-                await syncDataFromCloud();
-                
-            } catch (error) {
-                console.error(error);
-                showToast("Gagal memuat sistem. Cek internet.", "error");
-            }
+            await syncDataFromCloud();
         }
 
-        // --- MENGAMBIL DATA WAJAH DARI GOOGLE SHEETS ---
+        // --- MENGAMBIL DATA PIN DARI GOOGLE SHEETS ---
         async function syncDataFromCloud() {
             document.getElementById('loadingScreen').classList.remove('hidden');
-            document.getElementById('loadingText').textContent = "Sinkronisasi Database...";
-            document.getElementById('loadingSubText').textContent = "Mengambil data wajah dari Cloud";
-            
             try {
-                const response = await fetch(APPSCRIPT_URL); // GET request
+                const response = await fetch(APPSCRIPT_URL);
                 const data = await response.json();
+                employeeData = data; // Simpan ke memory lokal
                 
-                employeeData = data;
-                labeledFaceDescriptors = data.map(emp => {
-                    // Kembalikan array JSON menjadi Float32Array agar bisa dibaca FaceAPI
-                    const descriptorArray = new Float32Array(emp.descriptor);
-                    return new faceapi.LabeledFaceDescriptors(emp.label, [descriptorArray]);
-                });
-                
-                if (labeledFaceDescriptors.length > 0) {
-                    faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.55);
-                }
-                
-                document.getElementById('userCount').textContent = labeledFaceDescriptors.length;
+                document.getElementById('userCount').textContent = employeeData.length;
                 document.getElementById('loadingScreen').classList.add('hidden');
-                showToast("Data terbaru berhasil dimuat dari Cloud!", "success");
-                
+                showToast("Data PIN berhasil disinkronkan!", "success");
             } catch (error) {
                 console.error("Gagal sinkron:", error);
                 document.getElementById('loadingScreen').classList.add('hidden');
-                showToast("Gagal mengambil data dari Cloud. Cek URL AppScript.", "error");
+                showToast("Gagal mengambil data. Cek koneksi internet.", "error");
             }
         }
 
-        function showView(view) {
+        // --- NAVIGASI TAMPILAN ---
+        function returnToMenu() {
+            document.getElementById('registerView').classList.add('hidden');
+            document.getElementById('absenView').classList.add('hidden');
+            document.getElementById('mainMenu').classList.remove('hidden');
+            clearPin();
+        }
+
+        function showRegister() {
             document.getElementById('mainMenu').classList.add('hidden');
-            document.getElementById('cameraView').classList.remove('hidden');
+            document.getElementById('registerView').classList.remove('hidden');
             
-            if (view === 'register') {
-                currentMode = 'register';
-                document.getElementById('cameraTitle').textContent = "Pendaftaran Wajah";
-                document.getElementById('registerInputContainer').classList.remove('hidden');
-                document.getElementById('registerActions').classList.remove('hidden');
-                document.getElementById('scanActions').classList.add('hidden');
-                
-                document.getElementById('employeeName').value = '';
-                document.getElementById('employeePhone').value = '';
-                document.getElementById('employeeLocation').value = '';
-                
-                document.getElementById('scanStatus').textContent = 'Isi data & posisikan wajah Anda';
-                startCamera().then(() => {
-                    // Mulai pelacak wajah visual setelah kamera menyala
-                    setTimeout(startRegisterTracking, 1000);
-                });
-            }
+            // Kosongkan form
+            document.getElementById('regName').value = '';
+            document.getElementById('regPhone').value = '';
+            document.getElementById('regLocation').value = '';
+            document.getElementById('regPin').value = '';
         }
 
-        async function startScan(type) {
-            if (labeledFaceDescriptors.length === 0) {
-                showToast("Database kosong! Belum ada wajah di Cloud.", "error");
+        function showAbsen(tipe) {
+            if (employeeData.length === 0) {
+                showToast("Database kosong! Belum ada karyawan terdaftar.", "error");
                 return;
             }
-            currentMode = type;
+            currentMode = tipe;
             document.getElementById('mainMenu').classList.add('hidden');
-            document.getElementById('cameraView').classList.remove('hidden');
-            document.getElementById('cameraTitle').textContent = type === 'masuk' ? "Absen Masuk" : "Absen Pulang";
-            document.getElementById('registerInputContainer').classList.add('hidden');
-            document.getElementById('registerActions').classList.add('hidden');
-            document.getElementById('scanActions').classList.remove('hidden');
-            document.getElementById('scanStatus').textContent = 'Mencari kecocokan wajah...';
+            document.getElementById('absenView').classList.remove('hidden');
             
-            await startCamera();
-            setTimeout(startAutoScan, 1000);
-        }
-
-        function stopCameraAndReturn() {
-            if (scanInterval) clearInterval(scanInterval);
-            if (registerInterval) clearInterval(registerInterval); // Hentikan tracker pendaftaran
-            if (video.srcObject) {
-                video.srcObject.getTracks().forEach(t => t.stop());
-                video.srcObject = null;
+            const titleEl = document.getElementById('absenTitle');
+            const iconBox = document.getElementById('absenIconBox');
+            const iconEl = document.getElementById('absenIcon');
+            
+            if (tipe === 'masuk') {
+                titleEl.textContent = "Absen Masuk";
+                iconBox.className = "p-2 rounded-lg mr-3 text-white bg-emerald-500 shadow-md shadow-emerald-200";
+                iconEl.className = "fas fa-sign-in-alt";
+            } else {
+                titleEl.textContent = "Absen Pulang";
+                iconBox.className = "p-2 rounded-lg mr-3 text-white bg-rose-500 shadow-md shadow-rose-200";
+                iconEl.className = "fas fa-sign-out-alt";
             }
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            document.getElementById('cameraView').classList.add('hidden');
-            document.getElementById('mainMenu').classList.remove('hidden');
-            isProcessing = false;
+            clearPin();
         }
 
-        async function startCamera() {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
-            video.srcObject = stream;
-            return new Promise((resolve) => {
-                video.onloadedmetadata = () => {
-                    faceapi.matchDimensions(canvas, { width: video.videoWidth, height: video.videoHeight });
-                    resolve();
-                };
-            });
+        // --- FUNGSI NUMPAD ---
+        function typePin(num) {
+            if (currentPin.length < 6) {
+                currentPin += num;
+                document.getElementById('displayPin').value = currentPin;
+            }
         }
 
-        // --- FITUR BARU: PELACAK WAJAH SAAT PENDAFTARAN ---
-        function startRegisterTracking() {
-            const displaySize = { width: video.videoWidth, height: video.videoHeight };
-            registerInterval = setInterval(async () => {
-                if (isProcessing) return;
-                
-                // Deteksi wajah dengan tingkat toleransi lebih rendah (0.4) agar lebih mudah terdeteksi
-                const detection = await faceapi.detectSingleFace(video, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.4 }));
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                if (detection) {
-                    const resizedDetection = faceapi.resizeResults(detection, displaySize);
-                    // Gambar kotak hijau menandakan wajah sudah terkunci
-                    const box = new faceapi.draw.DrawBox(resizedDetection.box, { label: "Wajah Terkunci", boxColor: "#10b981" });
-                    box.draw(canvas);
-                }
-            }, 300); // Cek setiap 300 milidetik
+        function clearPin() {
+            currentPin = '';
+            document.getElementById('displayPin').value = '';
         }
 
-        // --- MENYIMPAN WAJAH BARU LANGSUNG KE CLOUD ---
-        async function captureAndRegister() {
-            const name = document.getElementById('employeeName').value.trim();
-            const phone = document.getElementById('employeePhone').value.trim();
-            const location = document.getElementById('employeeLocation').value;
+        // --- PROSES DAFTAR KARYAWAN ---
+        async function submitRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const location = document.getElementById('regLocation').value;
+            const pin = document.getElementById('regPin').value.trim();
 
-            if (!name || !phone || !location) {
+            if (!name || !phone || !location || !pin) {
                 showToast("Semua kolom wajib diisi!", "error"); return;
             }
-            
+            if (pin.length < 4) {
+                showToast("PIN minimal 4 angka!", "error"); return;
+            }
+
+            // Cek apakah PIN sudah dipakai orang lain
+            const isPinExist = employeeData.find(emp => emp.pin === pin);
+            if (isPinExist) {
+                showToast("PIN sudah digunakan karyawan lain. Ganti PIN!", "error"); return;
+            }
+
             if (isProcessing) return;
             isProcessing = true;
             
-            // --- EFEK SNAPSHOT (KAMERA FREEZE / DIAM) ---
-            video.pause(); // Hentikan video agar wajah terkunci
-            
-            // Efek kedip seperti blitz kamera
-            const container = document.querySelector('.video-container');
-            container.style.opacity = '0.2';
-            setTimeout(() => { container.style.opacity = '1'; }, 150);
-            
-            const btn = document.getElementById('btnRegister');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menganalisa Foto...';
-            document.getElementById('scanStatus').textContent = "Menganalisa gambar yang ditangkap...";
+            const btn = document.getElementById('btnSubmitReg');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menyimpan...';
+
+            const payload = {
+                action: "register",
+                nama: name,
+                nohp: phone,
+                lokasi: location,
+                pin: pin
+            };
 
             try {
-                // Turunkan minimal confidence agar tidak terlalu ketat (0.4 = 40% yakin itu wajah)
-                const detection = await faceapi.detectSingleFace(video, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.4 })).withFaceLandmarks().withFaceDescriptor();
-                
-                if (!detection) {
-                    showToast("Wajah tidak jelas. Silakan jepret ulang!", "error");
-                    resetRegBtn(btn); 
-                    video.play(); // Putar kembali kamera jika gagal
-                    return;
-                }
-
-                // Convert array Float32 ke array biasa agar bisa dikirim sebagai JSON
-                const descriptorArray = Array.from(detection.descriptor);
-
-                document.getElementById('scanStatus').textContent = "Mengunggah ke Cloud...";
-
-                const payload = {
-                    action: "register",
-                    nama: name,
-                    nohp: phone,
-                    lokasi: location,
-                    descriptor: descriptorArray
-                };
-
-                // Kirim ke Google Apps Script via POST
                 await fetch(APPSCRIPT_URL, {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
-
-                showToast(`Wajah ${name} tersimpan di Cloud!`, "success");
-                stopCameraAndReturn();
                 
-                // Download ulang data terbaru dari cloud di background
-                syncDataFromCloud();
+                showToast(`Karyawan ${name} berhasil didaftarkan!`, "success");
+                btn.innerHTML = '<i class="fas fa-save mr-2"></i> Simpan Karyawan';
+                isProcessing = false;
                 
+                returnToMenu();
+                syncDataFromCloud(); // Download data terbaru
             } catch (error) {
                 console.error(error);
-                showToast("Gagal menyimpan ke cloud.", "error");
-                resetRegBtn(btn);
-                video.play(); // Putar kembali kamera jika internet bermasalah
+                showToast("Gagal mendaftar ke server.", "error");
+                btn.innerHTML = '<i class="fas fa-save mr-2"></i> Simpan Karyawan';
+                isProcessing = false;
             }
         }
 
-        function resetRegBtn(btn) {
-            btn.innerHTML = '<i class="fas fa-cloud-upload-alt mr-2"></i> Simpan ke Cloud';
-            isProcessing = false;
-        }
-
-        // --- SCAN OTOMATIS DAN KIRIM ABSEN ---
-        function startAutoScan() {
-            if (!faceMatcher) return;
-            const displaySize = { width: video.videoWidth, height: video.videoHeight };
+        // --- PROSES ABSENSI ---
+        async function verifyPinAndAbsen() {
+            if (currentPin.length < 4) {
+                showToast("Masukkan PIN dengan lengkap!", "error"); return;
+            }
             
-            scanInterval = setInterval(async () => {
-                if (isProcessing) return;
-                const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
-                const resizedDetections = faceapi.resizeResults(detections, displaySize);
-                
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                faceapi.draw.drawDetections(canvas, resizedDetections);
+            // Cari data karyawan berdasarkan PIN
+            const user = employeeData.find(emp => emp.pin === currentPin);
+            
+            if (!user) {
+                showToast("PIN Salah atau Tidak Terdaftar!", "error");
+                clearPin();
+                return;
+            }
 
-                if (resizedDetections.length > 0) {
-                    const result = faceMatcher.findBestMatch(resizedDetections[0].descriptor);
-                    
-                    if (result.label !== 'unknown' && result.distance < 0.55) {
-                        isProcessing = true;
-                        clearInterval(scanInterval);
-                        
-                        new faceapi.draw.DrawBox(resizedDetections[0].detection.box, { label: result.label }).draw(canvas);
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            const btn = document.getElementById('btnSubmitAbsen');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
-                        document.getElementById('scanStatus').textContent = `Berhasil! Halo, ${result.label}`;
-                        
-                        // Cari data user dari database yang sudah didownload
-                        const user = employeeData.find(u => u.label === result.label);
-                        const phone = user ? user.phone : '-';
-                        const location = user ? user.location : '-';
-
-                        sendDataToAppSheet(result.label, currentMode, phone, location);
-                        
-                        setTimeout(() => stopCameraAndReturn(), 2500);
-                    }
-                }
-            }, 500);
-        }
-
-        async function sendDataToAppSheet(name, type, phone, location) {
             const timestamp = new Date().toLocaleString('id-ID');
             const payload = {
                 action: "absensi",
                 waktu: timestamp,
-                nama: name,
-                tipe: type,
-                nohp: phone,
-                lokasi: location
+                nama: user.nama,
+                tipe: currentMode,
+                nohp: user.nohp,
+                lokasi: user.lokasi
             };
-            
-            showToast(`Absen ${type} berhasil. Sinkronisasi...`, "info");
 
             try {
-                // Aktifkan fetch ini, pastikan URL Appscript sudah benar
                 await fetch(APPSCRIPT_URL, {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
-                showToast(`Data ${name} berhasil masuk AppSheet!`, "success");
+                
+                showToast(`Halo ${user.nama}, Absen ${currentMode} Berhasil!`, "success");
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                isProcessing = false;
+                
+                setTimeout(() => { returnToMenu(); }, 1500);
             } catch (error) {
                 console.error(error);
                 showToast("Gagal mengirim absensi ke server.", "error");
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                isProcessing = false;
             }
         }
 
