@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absensi PIN - Lestoran Alam Salero Nusantara</title>
+    <title>Absensi - Alam Salero Nusantara</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .numpad-btn {
@@ -18,6 +20,7 @@
             background-color: #e2e8f0;
         }
         
+        /* Animasi Toast / Notifikasi */
         #toast {
             visibility: hidden; min-width: 250px; background-color: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(8px); color: #fff; text-align: center; border-radius: 9999px;
@@ -30,7 +33,7 @@
 </head>
 <body class="bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 text-slate-800 min-h-screen flex flex-col antialiased">
 
-    <!-- Loading Screen -->
+    <!-- Loading Screen (Saat pertama kali buka web) -->
     <div id="loadingScreen" class="fixed inset-0 bg-white/90 backdrop-blur-md z-50 flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="relative">
             <div class="w-20 h-20 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
@@ -42,21 +45,23 @@
         <p class="text-sm text-slate-500 mt-2 font-medium" id="loadingSubText">Mengunduh data karyawan</p>
     </div>
 
-    <!-- Main Content -->
+    <!-- MAIN CONTENT CONTAINER -->
     <main class="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 w-full max-w-md mx-auto relative z-10">
         
-        <!-- MAIN MENU -->
+        <!-- ================= MAIN MENU ================= -->
         <div id="mainMenu" class="w-full bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 sm:p-8 transition-all duration-300">
             
             <!-- LOGO & HEADER -->
             <div class="flex flex-col items-center mb-8">
                 <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 mb-3 transform hover:scale-105 transition-transform duration-300">
-                    <img src="logo.png" alt="Logo Instansi" class="w-16 h-16 object-contain drop-shadow-sm" id="mainLogo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063822.png'">
+                    <!-- Silakan ganti logo.png dengan nama file logo Anda di Github jika ada -->
+                    <img src="logo.png" alt="Logo" class="w-16 h-16 object-contain drop-shadow-sm" id="mainLogo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063822.png'">
                 </div>
-                <h1 class="text-2xl font-extrabold text-slate-800 text-center tracking-tight leading-tight">Lestoran Alam Salero Nusantara</h1>
-                <p class="text-xs text-blue-600 font-bold mt-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">Sistem Absensi PIN</p>
+                <h1 class="text-2xl font-extrabold text-slate-800 text-center tracking-tight leading-tight">Alam Salero Nusantara</h1>
+                <p class="text-xs text-blue-600 font-bold mt-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">Sistem Absensi PIN Terpadu</p>
             </div>
 
+            <!-- TOMBOL MENU -->
             <div class="grid grid-cols-1 gap-4">
                 <button onclick="showRegister()" class="group relative overflow-hidden bg-white border-2 border-slate-200 hover:border-blue-500 text-slate-700 py-4 rounded-2xl font-bold text-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <i class="fas fa-user-plus mr-3 text-blue-500 group-hover:scale-110 transition-transform duration-300"></i> 
@@ -74,6 +79,7 @@
                 </button>
             </div>
             
+            <!-- STATUS KONEKSI -->
             <div class="mt-8 pt-5 border-t border-slate-200/60 flex flex-col items-center">
                 <div class="text-xs font-bold text-slate-500 flex items-center">
                     <i class="fas fa-cloud-check mr-2 text-blue-500"></i> Database PIN Aktif (<span id="userCount" class="mx-1 text-blue-600">0</span> Karyawan)
@@ -84,8 +90,9 @@
             </div>
         </div>
 
-        <!-- FORM REGISTER VIEW -->
+        <!-- ================= FORM DAFTAR KARYAWAN ================= -->
         <div id="registerView" class="hidden w-full bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 sm:p-8 transition-all flex flex-col">
+            
             <div class="w-full flex justify-between items-center mb-6">
                 <div class="flex items-center">
                     <div class="bg-blue-100 p-2 rounded-lg mr-3 text-blue-600"><i class="fas fa-user-plus"></i></div>
@@ -96,28 +103,36 @@
                 </button>
             </div>
 
+            <!-- Input Fields -->
             <div class="flex flex-col gap-4">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap</label>
                     <input type="text" id="regName" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
                 </div>
                 <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Divisi / Jabatan</label>
+                    <select id="regJabatan" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700 appearance-none">
+                        <option value="" disabled selected>Pilih Divisi...</option>
+                        <option value="KITCHEN (Chef, Helper Chef)">KITCHEN (Chef, Helper Chef)</option>
+                        <option value="FRONT OFFICE (Palung, Kasir, Waiters, Jusbar, Martabak/Sate)">FRONT OFFICE (Palung, Kasir, Waiters, Jusbar, Martabak/Sate)</option>
+                        <option value="OPERATION (Delivery, Cleaning Service, Security, General Affairs)">OPERATION (Delivery, Cleaning Service, Security, General Affairs)</option>
+                        <option value="BACK OFFICE (Admin, Finance/Accounting, HRD)">BACK OFFICE (Admin, Finance/Accounting, HRD)</option>
+                    </select>
+                </div>
+                <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">No HP / WhatsApp</label>
                     <input type="tel" id="regPhone" placeholder="Contoh: 0812345678" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1">Lokasi Kerja</label>
-                    <select id="regLocation" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700">
-                        <option value="" disabled selected>Pilih Lokasi...</option>
-                        <optgroup label="Pusat">
-                            <option value="Roa Malaka">Roa Malaka</option>
-                            <option value="Ciledug">Ciledug</option>
-                        </optgroup>
-                        <optgroup label="Cabang">
-                            <option value="Polda Metro Jaya">Polda Metro Jaya</option>
-                            <option value="Thamrin City">Thamrin City</option>
-                            <option value="The Brizze">The Brizze</option>
-                        </optgroup>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Cabang</label>
+                    <select id="regLocation" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-semibold text-slate-700 appearance-none">
+                        <option value="" disabled selected>Pilih Cabang...</option>
+                        <option value="POLDA METRO JAYA">POLDA METRO JAYA</option>
+                        <option value="THE BREEZE BSD">THE BREEZE BSD</option>
+                        <option value="THAMRIN CITY">THAMRIN CITY</option>
+                        <option value="ROA MALAKA">ROA MALAKA</option>
+                        <option value="CENTRAL PARK">CENTRAL PARK</option>
+                        <option value="CILEDUG">CILEDUG</option>
                     </select>
                 </div>
                 <div>
@@ -131,8 +146,9 @@
             </button>
         </div>
 
-        <!-- NUMPAD ABSEN VIEW -->
+        <!-- ================= NUMPAD ABSENSI (KASIR) ================= -->
         <div id="absenView" class="hidden w-full bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 transition-all flex flex-col items-center">
+            
             <div class="w-full flex justify-between items-center mb-4">
                 <div class="flex items-center">
                     <div id="absenIconBox" class="p-2 rounded-lg mr-3 text-white"><i id="absenIcon" class="fas"></i></div>
@@ -143,15 +159,15 @@
                 </button>
             </div>
 
-            <!-- Layar PIN -->
+            <!-- Layar Numpad -->
             <div class="w-full mb-6">
-                <p class="text-center text-sm text-slate-500 mb-2 font-bold">Masukkan PIN Anda</p>
+                <p class="text-center text-sm text-slate-500 mb-2 font-bold">Masukkan PIN Rahasia Anda</p>
                 <div class="w-full bg-slate-100 border-2 border-slate-200 h-16 rounded-xl flex items-center justify-center">
                     <input type="password" id="displayPin" readonly class="bg-transparent w-full text-center text-3xl font-extrabold tracking-[0.5em] text-slate-800 outline-none placeholder-slate-300" placeholder="••••">
                 </div>
             </div>
 
-            <!-- Numpad Kasir -->
+            <!-- Tombol Numpad -->
             <div class="grid grid-cols-3 gap-3 w-full max-w-[280px]">
                 <button onclick="typePin('1')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">1</button>
                 <button onclick="typePin('2')" class="numpad-btn bg-white border border-slate-200 text-slate-700 font-bold text-2xl py-4 rounded-xl shadow-sm hover:shadow-md">2</button>
@@ -172,32 +188,37 @@
         </div>
 
     </main>
+
+    <!-- Elemen Toast untuk pesan peringatan/sukses -->
     <div id="toast">Notifikasi</div>
 
     <script>
-        // --- 🔴 PASTE URL APPSCRIPT TERBARU ANDA DISINI 🔴 ---
-        const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKzerd0bhp1u_wWh7rWWwyKqzrW5RQRJxfsQoZ4ahJeketPkNrpBrB5FzbZaZUl3Z-gA/exec";
+        // =========================================================================
+        // 🔴 PASTE URL WEB APP DARI GOOGLE APPS SCRIPT ANDA DI BAWAH SINI 🔴
+        // =========================================================================
+        const APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDprCZo92-nq-AP33DoJsI6tsqMPVhVOn9LoMLBezRYwatXLmjIZDgwfHqzk5T8U5ihg/exec";
         
         let employeeData = []; 
         let currentMode = ''; 
         let currentPin = '';
         let isProcessing = false;
 
+        // Dijalankan saat web pertama kali dibuka
         async function init() {
             await syncDataFromCloud();
         }
 
-        // --- MENGAMBIL DATA PIN DARI GOOGLE SHEETS ---
+        // --- FETCH DATA PIN KARYAWAN DARI GOOGLE SHEETS ---
         async function syncDataFromCloud() {
             document.getElementById('loadingScreen').classList.remove('hidden');
             try {
                 const response = await fetch(APPSCRIPT_URL);
                 const data = await response.json();
-                employeeData = data; // Simpan ke memory lokal
+                employeeData = data; // Simpan data ke memory lokal perangkat
                 
                 document.getElementById('userCount').textContent = employeeData.length;
                 document.getElementById('loadingScreen').classList.add('hidden');
-                showToast("Data PIN berhasil disinkronkan!", "success");
+                showToast("Database PIN sinkron!", "success");
             } catch (error) {
                 console.error("Gagal sinkron:", error);
                 document.getElementById('loadingScreen').classList.add('hidden');
@@ -205,7 +226,7 @@
             }
         }
 
-        // --- NAVIGASI TAMPILAN ---
+        // --- SISTEM NAVIGASI (PINDAH-PINDAH LAYAR) ---
         function returnToMenu() {
             document.getElementById('registerView').classList.add('hidden');
             document.getElementById('absenView').classList.add('hidden');
@@ -217,8 +238,9 @@
             document.getElementById('mainMenu').classList.add('hidden');
             document.getElementById('registerView').classList.remove('hidden');
             
-            // Kosongkan form
+            // Mengosongkan form saat layar dibuka
             document.getElementById('regName').value = '';
+            document.getElementById('regJabatan').value = '';
             document.getElementById('regPhone').value = '';
             document.getElementById('regLocation').value = '';
             document.getElementById('regPin').value = '';
@@ -249,9 +271,9 @@
             clearPin();
         }
 
-        // --- FUNGSI NUMPAD ---
+        // --- LOGIKA NUMPAD KASIR ---
         function typePin(num) {
-            if (currentPin.length < 6) {
+            if (currentPin.length < 6) { // Maksimal 6 angka
                 currentPin += num;
                 document.getElementById('displayPin').value = currentPin;
             }
@@ -262,24 +284,26 @@
             document.getElementById('displayPin').value = '';
         }
 
-        // --- PROSES DAFTAR KARYAWAN ---
+        // --- PROSES SIMPAN KARYAWAN BARU KE SPREADSHEET ---
         async function submitRegister() {
             const name = document.getElementById('regName').value.trim();
+            const jabatan = document.getElementById('regJabatan').value;
             const phone = document.getElementById('regPhone').value.trim();
             const location = document.getElementById('regLocation').value;
             const pin = document.getElementById('regPin').value.trim();
 
-            if (!name || !phone || !location || !pin) {
+            // Validasi Input
+            if (!name || !jabatan || !phone || !location || !pin) {
                 showToast("Semua kolom wajib diisi!", "error"); return;
             }
             if (pin.length < 4) {
                 showToast("PIN minimal 4 angka!", "error"); return;
             }
 
-            // Cek apakah PIN sudah dipakai orang lain
+            // Validasi: Cek apakah PIN sudah pernah dipakai karyawan lain
             const isPinExist = employeeData.find(emp => emp.pin === pin);
             if (isPinExist) {
-                showToast("PIN sudah digunakan karyawan lain. Ganti PIN!", "error"); return;
+                showToast("PIN sudah dipakai karyawan lain. Buat PIN unik!", "error"); return;
             }
 
             if (isProcessing) return;
@@ -288,9 +312,12 @@
             const btn = document.getElementById('btnSubmitReg');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menyimpan...';
 
+            const timestamp = new Date().toLocaleString('id-ID');
             const payload = {
                 action: "register",
+                waktu: timestamp,
                 nama: name,
+                jabatan: jabatan,
                 nohp: phone,
                 lokasi: location,
                 pin: pin
@@ -307,7 +334,7 @@
                 isProcessing = false;
                 
                 returnToMenu();
-                syncDataFromCloud(); // Download data terbaru
+                syncDataFromCloud(); // Memanggil ulang data agar PIN baru bisa langsung digunakan
             } catch (error) {
                 console.error(error);
                 showToast("Gagal mendaftar ke server.", "error");
@@ -316,13 +343,13 @@
             }
         }
 
-        // --- PROSES ABSENSI ---
+        // --- PROSES ABSENSI (KIRIM DATA LOG ABSENSI) ---
         async function verifyPinAndAbsen() {
             if (currentPin.length < 4) {
                 showToast("Masukkan PIN dengan lengkap!", "error"); return;
             }
             
-            // Cari data karyawan berdasarkan PIN
+            // Mencari karyawan berdasarkan PIN yang diketik
             const user = employeeData.find(emp => emp.pin === currentPin);
             
             if (!user) {
@@ -342,9 +369,9 @@
                 action: "absensi",
                 waktu: timestamp,
                 nama: user.nama,
-                tipe: currentMode,
-                nohp: user.nohp,
-                lokasi: user.lokasi
+                jabatan: user.jabatan,
+                lokasi: user.lokasi,
+                tipe: currentMode // "masuk" atau "pulang"
             };
 
             try {
@@ -357,6 +384,7 @@
                 btn.innerHTML = '<i class="fas fa-check"></i>';
                 isProcessing = false;
                 
+                // Menunggu 1.5 detik agar pengguna bisa membaca pesan berhasil, lalu kembali ke menu
                 setTimeout(() => { returnToMenu(); }, 1500);
             } catch (error) {
                 console.error(error);
@@ -366,14 +394,18 @@
             }
         }
 
+        // --- FUNGSI MENAMPILKAN PESAN SINGKAT (TOAST) ---
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
+            // Ganti warna berdasarkan tipe pesan
             toast.style.backgroundColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
+            
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
+        // Mulai aplikasi
         window.onload = init;
     </script>
 </body>
